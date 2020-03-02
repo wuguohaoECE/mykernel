@@ -60,7 +60,7 @@ void my_schedule(void)
         	"pushl %%ebp\n\t" 	    /* save ebp */
         	"movl %%esp,%0\n\t" 	/* save esp */
         	"movl %2,%%esp\n\t"     /* restore  esp */
-        	"movl $1f,%1\n\t"       /* save eip */	
+        	"movl $1f,%1\n\t"       /* save eip  其实就是把66行的下一行代码块所在地址保存起来*/	
         	"pushl %3\n\t" 
         	"ret\n\t" 	            /* restore  eip */
         	"1:\t"                  /* next process start here */
