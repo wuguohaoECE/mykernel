@@ -46,10 +46,10 @@ void __init my_start_kernel(void)
     pid = 0;
     my_current_task = &task[pid];
 	asm volatile(
-    	"movl %1,%%esp\n\t" 	/* set task[pid].thread.sp to esp */
-    	"pushl %1\n\t" 	        /* push ebp */
-    	"pushl %0\n\t" 	        /* push task[pid].thread.ip */
-    	"ret\n\t" 	            /* pop task[pid].thread.ip to eip */
+    	"movl %1,%%esp\n\t" 	/* esp指向自制线程栈顶*/
+    	"pushl %1\n\t" 	        /* 往自制线程栈顶压入栈顶地址，相当于压入ebp所指(push %ebp) */
+    	"pushl %0\n\t" 	        /* 往自制线栈顶压入线程代码块地址，相当于压入eip(push %eip) */
+    	"ret\n\t" 	            /* 将eip指向指向线程代码块 */
     	: 
     	: "c" (task[pid].thread.ip),"d" (task[pid].thread.sp)	/* input c or d mean %ecx/%edx*/
 	);
